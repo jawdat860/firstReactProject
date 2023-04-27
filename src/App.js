@@ -1,39 +1,25 @@
 import { useState } from "react";
-import Expense from "./components/Expensive/Exprnsive";
-import NewExpensive from "./components/NewExpensiv/NewExpensive";
-const expense = [
-  {
-    id: "e1",
-    title: "Toilet Paper",
-    amount: 94.12,
-    date: new Date(2020, 7, 14),
-  },
-  { id: "e2", title: "New TV", amount: 799.49, date: new Date(2021, 2, 12) },
-  {
-    id: "e3",
-    title: "Car Insurance",
-    amount: 294.67,
-    date: new Date(2021, 2, 28),
-  },
-  {
-    id: "e4",
-    title: "New Desk (Wooden)",
-    amount: 450,
-    date: new Date(2021, 5, 12),
-  },
-];
+import Form from "./components/Form/Form";
+import Container from "./components/Show/Container";
+
 function App() {
-  const [data, setData] = useState(expense);
-  function onReceiveDataFromNew(dataFromNew) {
-    setData((previousData) => {
-      return [dataFromNew, ...previousData];
+  const [data, setData] = useState([]);
+
+  function dataHandler(data) {
+    setData((pre) => {
+      return [...pre, data];
     });
   }
+  function delHandler(d) {
+    setData((r) => {
+      return r.filter((e) => e.id.toString() !== d);
+    });
+  }
+  console.log(data);
   return (
     <div>
-      <NewExpensive DataFromNew={onReceiveDataFromNew} />
-      
-      <Expense expense={data} />
+      <Form data={dataHandler} />
+      <Container data={data} del={delHandler} />
     </div>
   );
 }
